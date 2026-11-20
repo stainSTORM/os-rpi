@@ -2,13 +2,9 @@
 name: updatecli-compose
 
 on:
-  push:
-    branches:
-      - main
-      - edge
   workflow_dispatch:
   schedule:
-    - cron: '0 16 * * *'  # 16:00 UTC every day
+    - cron: "0 16 * * *" # 16:00 UTC every day
 
 env:
   REPO_OWNER: ${{ github.repository_owner }}
