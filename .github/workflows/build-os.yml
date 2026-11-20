@@ -308,7 +308,7 @@ jobs:
       - name: Add temporary mitigation for eMudhra certificate compromise
         # Note: this is needed for RPi OS images from 2026-10-06 and earlier.
         # TODO: bump RPi OS to a newer version so that we can remove this step!
-        uses: ethanjli/pinspawn-action@db40697614fdb87a86803a375408ab55d68b008e
+        uses: ethanjli/pinspawn-action@v0.1.6-beta.0
         with:
           image: ${{ steps.expand-image.outputs.destination }}
           args: >-
@@ -316,6 +316,17 @@ jobs:
           run: |
             apt-get -o Dpkg::Progress-Fancy=0 update
             apt-get -o Dpkg::Progress-Fancy=0 install ca-certificates libnss3
+
+      - name: Clean up unneeded files
+        uses: ethanjli/pinspawn-action@v0.1.6-beta.0
+        with:
+          image: ${{ steps.expand-image.outputs.destination }}
+          args: >-
+            --bind "$(pwd)":/run/pallet
+            --machine=raspberrypi
+          run: |
+            du -sh /var/cache/apt/archives || true
+            /run/pallet/os-build/cleanup.sh
 
       - name: Prepare for a headless first boot on bare metal
         uses: ethanjli/pinspawn-action@v0.1.6-beta.0
