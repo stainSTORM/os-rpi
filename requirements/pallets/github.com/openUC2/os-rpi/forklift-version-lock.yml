@@ -1,4 +1,4 @@
-type: pseudoversion
-tag: v26.1.0-alpha.0
-timestamp: "20261120123204"
-commit: 8f833d0805b60960309d3114013f6a82d25c5cd3
+type: version
+tag: v26.1.0-alpha.1
+timestamp: "20261120161710"
+commit: 4d98cc8257da88e21d2e3d4fc39a5ad80f143d83
