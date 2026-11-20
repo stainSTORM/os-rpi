@@ -2,7 +2,13 @@
 name: updatecli-forklift
 
 on:
+  push:
+    branches:
+      - main
+      - edge
   workflow_dispatch:
+  schedule:
+    - cron: "0 16 * * *" # 16:00 UTC every day
 
 env:
   REPO_OWNER: ${{ github.repository_owner }}
@@ -20,9 +26,6 @@ jobs:
     env:
       UPDATECLI_COMPOSE: /tmp/forklift-pallets.updatecli-compose.yml
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        type: [pallets, repos]
     defaults:
       run:
         shell: bash
@@ -40,7 +43,6 @@ jobs:
       - name: Cache Forklift requirements
         run: |
           forklift dev plt cache-plt
-          forklift dev plt cache-repo
 
       - name: Generate updatecli compose file
         id: generate-compose
@@ -51,7 +53,7 @@ jobs:
           .github/generate-forklift-updatecli-compose.sh \
             "$(pwd)" \
             ".github/forklift.updatecli-compose.yqtempl" \
-            "${{ matrix.type }}" \
+            "pallets" \
             "$UPDATECLI_COMPOSE"
 
           num_policies="$(yq '.policies | length' "$UPDATECLI_COMPOSE")"
