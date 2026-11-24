@@ -1,4 +1,4 @@
-type: version
+type: pseudoversion
 tag: v26.1.0-alpha.1
-timestamp: "20261120161710"
-commit: 4d98cc8257da88e21d2e3d4fc39a5ad80f143d83
+timestamp: "20261123200317"
+commit: caf72484993fd1decb880b7a815e1679d11eb98e
