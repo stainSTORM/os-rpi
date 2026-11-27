@@ -71,7 +71,8 @@ The image works without internet at first boot.
 1. Once you've booted your machine into the OS, from a terminal (either the Cockpit terminal or
    an SSH remote session) you can run the following command to upgrade the local pallet to the
    latest commit on the branch the image was built from (`edge` for images built from pushes to
-   it):
+   it; `alpha` for the pre-release images on the releases page, which moves when a `v*-alpha.*`
+   tag is pushed):
 
    ```bash
    forklift plt upgrade
@@ -100,6 +101,22 @@ The image works without internet at first boot.
    ```bash
    forklift stage apply
    ```
+
+### Moving a Pi from the openUC2 pallet
+
+A Pi flashed with an openUC2 OS image switches to this pallet in place, over the internet:
+
+```bash
+forklift --version
+forklift plt switch github.com/stainSTORM/os-rpi@edge
+sudo reboot
+```
+
+Forklift must be v0.8.0-alpha.7 or newer (images from November 2026 have v0.9.0-alpha.1). The
+switch downloads the images, replaces the local pallet (`--force` if it has local changes, which
+are lost) and makes `forklift plt upgrade` follow this repo's `edge`. ImSwitch stops; its
+`/home/pi/ImSwitchConfig` and `/home/pi/Datasets` stay. Then set up each robot as above.
+`forklift plt switch github.com/openUC2/os-rpi@edge` goes back.
 
 ### Disabling/enabling functionalities
 
