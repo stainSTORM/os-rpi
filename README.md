@@ -14,8 +14,8 @@ Raspberry Pi computers in the OS.
 
 | Deployment | Robot | Container | Page |
 |---|---|---|---|
-| `fairino` | Fairino arm | [stainSTORM/fairinogale](https://github.com/stainSTORM/fairinogale) | `http://<machine>/fairino/` |
-| `opentrons` | Opentrons OT-2 | [stainSTORM/OT2windy_service](https://github.com/stainSTORM/OT2windy_service) | `http://<machine>/opentrons/` |
+| `fairino` | Fairino arm, Arkitekt app `arkirino` | [stainSTORM/fairinogale](https://github.com/stainSTORM/fairinogale) | `http://<machine>/fairino/` |
+| `opentrons` | Opentrons OT-2, Arkitekt app `ot2` | [stainSTORM/OT2windy_service](https://github.com/stainSTORM/OT2windy_service) | `http://<machine>/opentrons/` |
 | `webcam` | USB camera, to watch the robots | [stainSTORM/dockerwebcam](https://github.com/stainSTORM/dockerwebcam) | `http://<machine>/webcam/` |
 
 Both are on by default, and the machine's home page links to them. On a robot's page:
@@ -23,6 +23,12 @@ Both are on by default, and the machine's home page links to them. On a robot's 
 1. Edit `config.yaml` (the robot's IP, and for the arm its stations) and press **Save and restart**.
 2. Enter the Arkitekt server and press **Bind**. Open the approval link it shows in any browser and
    check the code. The login is stored, so the service reconnects after a reboot.
+
+The app names are the ones the stainSTORM workflow (`process_slides` in
+[helsinki_fake_lab](https://github.com/stainSTORM/helsinki_fake_lab)) asks for, shared with its
+simulated devices. A `config.yaml` from before the Arkitekt 19 services still names `fairinogale` or
+`ot2windy`: set `app:` to `arkirino` or `ot2` there. After that update, bind each robot once more:
+the login is stored per app version.
 
 Each service only talks to its robot when an Arkitekt action runs, so an unused one just waits.
 To switch it off, run `forklift plt disable-depl opentrons` (or `fairino`), then
@@ -54,7 +60,7 @@ These are usage instructions for developers.
 
 ### Downloading an OS image
 
-Go to this repo's [releases page](https://github.com/openUC2/os-rpi-arkitekt/releases), and
+Go to this repo's [releases page](https://github.com/stainSTORM/os-rpi/releases), and
 download the `.img.xz` SD card image file for the release or pre-release you want to run.
 Flash it to an SD card with
 [Raspberry Pi Imager](https://www.raspberrypi.com/software/).
@@ -64,8 +70,8 @@ The image works without internet at first boot.
 
 1. Once you've booted your machine into the OS, from a terminal (either the Cockpit terminal or
    an SSH remote session) you can run the following command to upgrade the local pallet to the
-   latest commit on the branch the image was built from (`arkitekt-service` for images built from
-   pushes to it):
+   latest commit on the branch the image was built from (`edge` for images built from pushes to
+   it):
 
    ```bash
    forklift plt upgrade

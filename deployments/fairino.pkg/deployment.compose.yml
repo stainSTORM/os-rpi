@@ -1,7 +1,7 @@
 services:
   server:
     # Built by https://github.com/stainSTORM/fairinogale (.github/workflows/docker.yml) on every push.
-    image: ghcr.io/stainstorm/fairinogale:sha-50d9ed2@sha256:2ffb5269c50862c682afadf1e1f9c89527cd36fb3da042106f1e0f9cee824dbf
+    image: ghcr.io/stainstorm/fairinogale:sha-e44ff09@sha256:f2ab0b15c3ce430bbbed044e64b812ea60d111956c3d7de6b98e5fcf71d6884b
     # Host networking, so that the robot is reached the way a shell on the Pi reaches it. A robot
     # cabled to a direct-connect port (eth0, eth1, usb0, usb1: 192.168.5-8.x) is behind a
     # NetworkManager "shared" connection, whose nftables rules reject new connections forwarded
